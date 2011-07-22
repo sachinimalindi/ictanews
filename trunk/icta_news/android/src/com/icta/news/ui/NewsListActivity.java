@@ -5,6 +5,7 @@ import com.icta.news.model.NewsProviderMetaData.NewsTableMetaData;
 import com.icta.news.service.NewsServiceHelper;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,17 +22,22 @@ public class NewsListActivity extends ListActivity {
 	private SimpleCursorAdapter adapter;
 	NewsServiceHelper helper;
 
-	private static final String[] FROM = { NewsTableMetaData.TITLE,
-				NewsTableMetaData.CREATED };
-	private static final int[] TO = { R.id.list_item_title,
-				R.id.list_item_date };
-
-
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
+		helper.releaseService();
 		Log.v(TAG, "onListItemClick ... ListView is -"+l+" view is -"+v+" position is -"+position + " id is - "+id);
-		super.onListItemClick(l, v, position, id);
+		//super.onListItemClick(l, v, position, id);
+		Uri viewedNews = Uri.withAppendedPath(NewsTableMetaData.CONTENT_URI, String.valueOf(id));
+		//String uString =viewedNews.toString();
+		Log.v(TAG, "selected new uri is : "+viewedNews.toString());
+		Intent intent = new Intent(this, ViewNewsActivity.class);
+		intent.putExtra("uri", viewedNews.toString());
+		
+		//////////////////////////////////////
+		
+		////////////////////////////////
+		startActivity(intent);
 	}
 
 	@Override
@@ -42,17 +48,16 @@ public class NewsListActivity extends ListActivity {
 		Uri content = NewsTableMetaData.CONTENT_URI;
 		/////////////////////////////////////////////////////////////////
 		
-		 helper = new NewsServiceHelper(getApplicationContext());
-		helper.bindService();
-
+		//loadNews();
+		
 		 //helper.invokeService();
 		/////////////////////////////////////////////////////////////////
 		Log.v(TAG, "id is "+ NewsTableMetaData._ID);
 		Log.v(TAG, "content is "+content.toString());
 		Cursor cursor = getContentResolver().query(content, projection, null, null, null);
 		
-		adapter = new SimpleCursorAdapter(this, R.layout.news_list_item , cursor, FROM , TO );
-		setListAdapter(adapter);
+		//adapter = new SimpleCursorAdapter(this, R.layout.news_list_item , cursor, FROM , TO );
+		//setListAdapter(adapter);
 		
 		super.onCreate(savedInstanceState);
 		
@@ -74,6 +79,7 @@ public class NewsListActivity extends ListActivity {
 	@Override
 	protected void onStart() {
 		Log.v(TAG, "onStart");
+		loadNewsIfNotLoaded();
 		super.onStart();
 	}
 	
@@ -81,6 +87,18 @@ public class NewsListActivity extends ListActivity {
 	protected void onDestroy() {
 		Log.v(TAG, "onDestroy");
 		super.onDestroy();
+	}
+	
+	private void loadNewsIfNotLoaded() {
+		if (null == getListAdapter()) {
+			loadNews();
+		}
+	}
+
+	private void loadNews() {
+		 helper = new NewsServiceHelper(getApplicationContext());
+			helper.bindService();
+		
 	}
 	
 	

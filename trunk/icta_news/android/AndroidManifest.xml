@@ -40,6 +40,7 @@
                 <action android:name="com.icta.news.service.NewsService"></action>
             </intent-filter>
         </service>
+        <activity android:name=".ui.ViewNewsActivity"></activity>
 
     </application>
 </manifest>
