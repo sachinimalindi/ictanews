@@ -52,7 +52,7 @@ public class NewsContentProvider extends ContentProvider {
 				, "news"
 				, INCOMING_NEWS_COLLECTION_URI_INDICATOR);
 		sUriMatcher.addURI(NewsProviderMetaData.AUTHORITY
-				, "anews/#",
+				, "news/#",
 				INCOMING_SINGLE_NEWS_URI_INDICATOR);
 	}
 	// Deal with OnCreate call back
@@ -201,6 +201,7 @@ public class NewsContentProvider extends ContentProvider {
 		Log.v(TAG, "Cursor query");
 		Log.v(TAG, "uri is :"+uri);
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+		Log.v(TAG, "query SQLiteQueryBuilde  : "+qb);
 		switch (sUriMatcher.match(uri))
 		{
 			case INCOMING_NEWS_COLLECTION_URI_INDICATOR:
@@ -211,6 +212,7 @@ public class NewsContentProvider extends ContentProvider {
 			case INCOMING_SINGLE_NEWS_URI_INDICATOR:
 				qb.setTables(NewsTableMetaData.TABLE_NAME);
 				qb.setProjectionMap(sNewsProjectionMap);
+				Log.v(TAG, "query getPathSegments  : "+uri.getPathSegments().get(1));
 				qb.appendWhere(NewsTableMetaData._ID + "="
 						+ uri.getPathSegments().get(1));
 				break;
@@ -218,7 +220,7 @@ public class NewsContentProvider extends ContentProvider {
 			default:
 				throw new IllegalArgumentException("Unknown URI " + uri);
 		}
-
+		Log.v(TAG, "query sorting");
 		// If no sort order is specified use the default
 		String orderBy;
 		if (TextUtils.isEmpty(sortOrder)) {
@@ -226,15 +228,17 @@ public class NewsContentProvider extends ContentProvider {
 		} else {
 			orderBy = sortOrder;
 		}
-
+		Log.v(TAG, "query get database");
 		// Get the database and run the query
 		SQLiteDatabase db =
 			mOpenHelper.getReadableDatabase();
+		Log.v(TAG, "query going to quering");
 
 		Cursor c = qb.query(db, projection, selection,
 				selectionArgs, null, null, orderBy);
-
+		Log.v(TAG, "query cursor cis :  "+c.toString());
 		int i = c.getCount();
+		Log.v(TAG, "query count is  :  "+i);
 		// Tell the cursor what uri to watch,
 		// so it knows when its source data changes
 		c.setNotificationUri(getContext().getContentResolver(), uri);

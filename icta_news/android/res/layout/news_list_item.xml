@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:orientation="vertical">
-  
-    <TextView android:text="TextView" 
-	    android:id="@+id/list_item_title" 
-	    android:layout_width="match_parent" 
-	    android:layout_height="wrap_content"
-	    android:textSize="24dp"
-	    android:padding="6dp">
-    </TextView>
-    
-    <TextView android:text="TextView" 
-	    android:id="@+id/list_item_date" 
-	    android:layout_width="match_parent" 
-	    android:layout_height="wrap_content"
-	    android:textSize="18dp"
-        android:padding="4dp"
-        android:gravity="right">
-    </TextView>
-    
-</LinearLayout>
+    <RelativeLayout android:id="@+id/relativeLayout1" 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent" 
+	    xmlns:android="http://schemas.android.com/apk/res/android">
+	    
+        <TextView android:text="TextView" 
+	        android:id="@+id/list_item_title" 
+	        android:textSize="24dp"
+	        android:padding="6dp"
+	        android:layout_alignParentTop="true" 
+	        android:layout_height="wrap_content" 
+	        android:layout_width="wrap_content">
+        </TextView>
+        
+        <TextView android:text="TextView" 
+	        android:id="@+id/list_item_date" 
+	        android:layout_height="wrap_content" 
+	        android:layout_width="wrap_content" 
+	        android:textSize="18dp"
+            android:padding="4dp" 
+	        android:layout_below="@id/list_item_title" 
+	        android:layout_alignLeft="@id/list_item_title" 
+	        android:layout_alignRight="@id/list_item_title">
+        </TextView>
+        
+        <ImageView android:src="@drawable/next" 
+	        android:id="@+id/list_item_next_icon" 
+	        android:layout_alignParentRight="true"
+	        android:layout_width="wrap_content" 
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/list_item_date" >
+        </ImageView>
+        
+    </RelativeLayout>
+
