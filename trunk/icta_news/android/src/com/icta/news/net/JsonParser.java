@@ -46,7 +46,7 @@ public class JsonParser {
 	}
 
 	private void setCurrentNews() {
-		News currentN = new News();
+		News currentN = new News(0, null, 0, null, null);
 		this.currentNews = currentN;
 	}
 	
