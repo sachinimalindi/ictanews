@@ -1,8 +1,11 @@
 package com.icta.news.ui;
 
+import com.icta.news.NewsManagerApplication;
 import com.icta.news.R;
+import com.icta.news.model.News;
 import com.icta.news.model.NewsProviderMetaData.NewsTableMetaData;
 import com.icta.news.service.NewsServiceHelper;
+import com.icta.news.ui.adapter.NewsListAdapter;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -13,26 +16,33 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class NewsListActivity extends ListActivity {
 
 	public static final String TAG = "NewsListActivity";
 	
-	 
-	private SimpleCursorAdapter adapter;
+	private NewsManagerApplication app;
+	private NewsListAdapter adapter;
+	//private SimpleCursorAdapter adapter;
 	NewsServiceHelper helper;
 
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		helper.releaseService();
+		if (helper != null) {
+			helper.releaseService();
+		}
+		
 		Log.v(TAG, "onListItemClick ... ListView is -"+l+" view is -"+v+" position is -"+position + " id is - "+id);
 		//super.onListItemClick(l, v, position, id);
-		Uri viewedNews = Uri.withAppendedPath(NewsTableMetaData.CONTENT_URI, String.valueOf(id));
+		//Uri viewedNews = Uri.withAppendedPath(NewsTableMetaData.CONTENT_URI, String.valueOf(id));
 		//String uString =viewedNews.toString();
-		Log.v(TAG, "selected new uri is : "+viewedNews.toString());
+		//Log.v(TAG, "selected new uri is : "+viewedNews.toString());
+		
+		News n = (News) adapter.getItem(position);
 		Intent intent = new Intent(this, ViewNewsActivity.class);
-		intent.putExtra("uri", viewedNews.toString());
+		intent.putExtra("news", n);
 		
 		//////////////////////////////////////
 		
@@ -44,20 +54,23 @@ public class NewsListActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.v(TAG, "onCreate");
 		setContentView(R.layout.main);
-		String[] projection = { NewsTableMetaData._ID ,NewsTableMetaData.TITLE,NewsTableMetaData.CREATED };
-		Uri content = NewsTableMetaData.CONTENT_URI;
+		
+		app = (NewsManagerApplication) getApplication();
+		adapter = new NewsListAdapter(this, app.getNews());
+	//	String[] projection = { NewsTableMetaData._ID ,NewsTableMetaData.TITLE,NewsTableMetaData.CREATED };
+	//	Uri content = NewsTableMetaData.CONTENT_URI;
 		/////////////////////////////////////////////////////////////////
 		
 		//loadNews();
 		
 		 //helper.invokeService();
 		/////////////////////////////////////////////////////////////////
-		Log.v(TAG, "id is "+ NewsTableMetaData._ID);
-		Log.v(TAG, "content is "+content.toString());
-		Cursor cursor = getContentResolver().query(content, projection, null, null, null);
+		//Log.v(TAG, "id is "+ NewsTableMetaData._ID);
+		//Log.v(TAG, "content is "+content.toString());
+	//	Cursor cursor = getContentResolver().query(content, projection, null, null, null);
 		
 		//adapter = new SimpleCursorAdapter(this, R.layout.news_list_item , cursor, FROM , TO );
-		//setListAdapter(adapter);
+		setListAdapter(adapter);
 		
 		super.onCreate(savedInstanceState);
 		
@@ -73,7 +86,9 @@ public class NewsListActivity extends ListActivity {
 	@Override
 	protected void onResume() {
 		Log.v(TAG, "onResume");
+	//	adapter.forceReload();
 		super.onResume();
+		loadNewsIfNotLoaded();
 	}
 
 	@Override
@@ -90,7 +105,9 @@ public class NewsListActivity extends ListActivity {
 	}
 	
 	private void loadNewsIfNotLoaded() {
-		if (null == getListAdapter()) {
+		Log.v(TAG, "loadNewsIfNotLoaded()");
+		Log.v(TAG, "loadNewsIfNotLoaded     Count is : "+(adapter.getCount()>0)+"  and " + adapter.getCount());
+		if (adapter.getCount() ==0) {
 			loadNews();
 		}
 	}
@@ -98,7 +115,7 @@ public class NewsListActivity extends ListActivity {
 	private void loadNews() {
 		 helper = new NewsServiceHelper(getApplicationContext());
 			helper.bindService();
-		
+		adapter.appendNewer(app.getNews());
 	}
 	
 	
