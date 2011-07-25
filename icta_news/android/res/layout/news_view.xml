@@ -10,7 +10,7 @@
 	    android:layout_width="fill_parent"
 	    android:orientation="horizontal">
 	    
-	    <ImageView android:src="@drawable/icon" 
+	    <ImageView 
 		    android:id="@+id/news_image" 
 		    android:layout_width="75px"
 	    	android:layout_height="75px"
@@ -52,14 +52,21 @@
 	    android:layout_height="wrap_content" 
 	    android:layout_width="fill_parent">
 	    
-	     <TextView android:text="TextView" 
+	      <ScrollView android:id="@+id/scrollView1" 
+	      android:layout_height="wrap_content"
+	       android:layout_width="match_parent">
+	       
+	         <TextView android:text="TextView" 
 		     android:id="@+id/news_content" 
 		     android:padding="8dp"
 		     android:layout_width="wrap_content" 
 		     android:layout_height="wrap_content">
 	     </TextView>
-	     
+        
+          </ScrollView>
+
     </LinearLayout>
+  
    
     
 </LinearLayout>
