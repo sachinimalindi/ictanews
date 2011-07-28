@@ -3,22 +3,22 @@
     android:id="@+id/relativeLayout1" 
 	    android:layout_width="fill_parent" 
 	    android:layout_height="fill_parent" 
-	    xmlns:android="http://schemas.android.com/apk/res/android">
+	    xmlns:android="http://schemas.android.com/apk/res/android" android:background="@drawable/list_item_background">
 	    
         <TextView android:text="TextView" 
 	        android:id="@+id/list_item_title" 
-	        android:textSize="24dp"
+	        android:textSize="16dp"
 	        android:padding="6dp"
 	        android:layout_alignParentTop="true" 
 	        android:layout_height="wrap_content" 
-	        android:layout_width="wrap_content">
+	        android:layout_width="275dp">
         </TextView>
         
         <TextView android:text="TextView" 
 	        android:id="@+id/list_item_date" 
 	        android:layout_height="wrap_content" 
-	        android:layout_width="wrap_content" 
-	        android:textSize="18dp"
+	        android:layout_width="275dp" 
+	        android:textSize="12dp"
             android:padding="4dp" 
 	        android:layout_below="@id/list_item_title" 
 	        android:layout_alignLeft="@id/list_item_title" 

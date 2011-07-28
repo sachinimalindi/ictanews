@@ -1,5 +1,8 @@
 package com.icta.news.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.icta.news.NewsManagerApplication;
 import com.icta.news.R;
 import com.icta.news.model.News;
@@ -12,16 +15,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
 public class NewsListActivity extends ListActivity {
 
 	public static final String TAG = "NewsListActivity";
 	
+	final private Handler handler = new Handler();
+	ArrayList<News> nlist ;
 	private NewsManagerApplication app;
 	private NewsListAdapter adapter;
 	//private SimpleCursorAdapter adapter;
@@ -30,9 +37,9 @@ public class NewsListActivity extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		if (helper != null) {
-			helper.releaseService();
-		}
+		//if (helper != null) {
+		//	helper.releaseService();
+		//}
 		
 		Log.v(TAG, "onListItemClick ... ListView is -"+l+" view is -"+v+" position is -"+position + " id is - "+id);
 		//super.onListItemClick(l, v, position, id);
@@ -52,26 +59,18 @@ public class NewsListActivity extends ListActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		Log.v(TAG, "onCreate");
+		
 		setContentView(R.layout.main);
-		
-		app = (NewsManagerApplication) getApplication();
-		adapter = new NewsListAdapter(this, app.getNews());
-	//	String[] projection = { NewsTableMetaData._ID ,NewsTableMetaData.TITLE,NewsTableMetaData.CREATED };
-	//	Uri content = NewsTableMetaData.CONTENT_URI;
-		/////////////////////////////////////////////////////////////////
-		
-		//loadNews();
-		
-		 //helper.invokeService();
-		/////////////////////////////////////////////////////////////////
-		//Log.v(TAG, "id is "+ NewsTableMetaData._ID);
-		//Log.v(TAG, "content is "+content.toString());
-	//	Cursor cursor = getContentResolver().query(content, projection, null, null, null);
-		
-		//adapter = new SimpleCursorAdapter(this, R.layout.news_list_item , cursor, FROM , TO );
+
+		ArrayList<News> arrayList = new ArrayList<News>();
+		Log.v(TAG, " arrayList is "+arrayList);
+		adapter = new NewsListAdapter(this, arrayList);
+		Log.v(TAG, "adapter is "+adapter);
 		setListAdapter(adapter);
-		
+		loadNews();
+		Log.v(TAG, "adapter is set ");
 		super.onCreate(savedInstanceState);
 		
 		
@@ -88,13 +87,13 @@ public class NewsListActivity extends ListActivity {
 		Log.v(TAG, "onResume");
 	//	adapter.forceReload();
 		super.onResume();
-		loadNewsIfNotLoaded();
+		//loadNewsIfNotLoaded();
 	}
 
 	@Override
 	protected void onStart() {
 		Log.v(TAG, "onStart");
-		loadNewsIfNotLoaded();
+		//loadNewsIfNotLoaded();
 		super.onStart();
 	}
 	
@@ -113,10 +112,14 @@ public class NewsListActivity extends ListActivity {
 	}
 
 	private void loadNews() {
-		 helper = new NewsServiceHelper(getApplicationContext());
-			helper.bindService();
-		adapter.appendNewer(app.getNews());
+		helper = new NewsServiceHelper(getApplicationContext());
+		 helper.bindService(getListAdapter());
+		//bindServiceThread.start();
+		//adapter.appendNewer(app.getNews());
+			
 	}
-	
+
+
+
 	
 }
