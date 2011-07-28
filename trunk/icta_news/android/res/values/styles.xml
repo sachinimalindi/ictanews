@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="WindowTitle">
+        <item name="android:singleLine">true</item>
+        <item name="android:shadowColor">#BB000000</item>
+        <item name="android:shadowRadius">2.75</item>
+        <item name="android:textAppearance">@style/TextAppearance.WindowTitle</item>
+    </style>
+    <style name="TextAppearance.WindowTitle">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance">
+        <item name="android:textColor">#FFEE0000</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColorLink">#5C5CFF</item>
+    </style>
+    <style name="WindowTitleBackground">
+        <item name="android:background">@drawable/window_title_background</item>
+    </style>
+    <style name="Widget" parent="android:Widget">
+        <item name="android:textAppearance">@style/TextAppearance</item>
+    </style>
+    <style name="Widget.ListView" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/list_selector_background</item>
+<!--         <item name="android:cacheColorHint">@color/color_foreground</item> -->
+        <item name="android:divider">@drawable/list_item_divider</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+</resources>

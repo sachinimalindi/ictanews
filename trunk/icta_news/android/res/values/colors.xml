@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_foreground">#FFFFF8EB</color>
+	<color name="color_background">#FFFFF8EB</color>
+	<color name="color_foreground_inverse">#FF444444</color>
+
+	<color name="title_color_light">#FFFFA500</color>
+	<color name="title_color_dark">#FFCD8500</color>
+	<color name="title_border">#FF282828</color>
+	
+	<color name="list_item_color_light">#FFEEEEEE</color>
+	<color name="list_item_color_dark">#FFBBBBBB</color>
+	<color name="list_item_selected_color_light">#FFFFFFFF</color>
+	<color name="list_item_selected_color_dark">#FFFFF3DF</color>
+	<color name="list_item_pressed_color_light">#FFFFFFFF</color>
+	<color name="list_item_pressed_color_dark">#FFDDDDDD</color>
+	<color name="list_item_color_disabled">#FFCCCCCC</color>
+</resources>
