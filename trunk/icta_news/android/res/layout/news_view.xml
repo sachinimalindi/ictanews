@@ -12,8 +12,8 @@
 	    
 	    <ImageView 
 		    android:id="@+id/news_image" 
-		    android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
+		    android:layout_width="125dp"
+	    	android:layout_height="125dp"
 	        android:adjustViewBounds="true"
 		   	android:layout_marginTop="6sp"
 		   	android:layout_marginLeft="6sp" 
@@ -30,7 +30,7 @@
 			    android:id="@+id/news_title" 
 			    android:layout_width="match_parent" 
 			    android:layout_height="wrap_content"
-			    android:textSize="20dp"
+			    android:textSize="18dp"
 			    android:padding="6dp"
 			    android:gravity="right">
 		    </TextView>
@@ -39,7 +39,7 @@
 			    android:id="@+id/news_created" 
 			    android:layout_width="match_parent" 
 			    android:layout_height="wrap_content"
-			    android:textSize="12dp"
+			    android:textSize="10dp"
 		        android:padding="4dp"
 		        android:gravity="right">
 		    </TextView>

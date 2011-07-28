@@ -76,7 +76,7 @@ public class ViewNewsActivity extends Activity {
 		 
 		 Drawable drawable = null;
 		 if (n.getImageURL()==null) {
-			image.setVisibility(View.INVISIBLE);
+			image.setVisibility(View.GONE);
 		} else {
 
 			try {
