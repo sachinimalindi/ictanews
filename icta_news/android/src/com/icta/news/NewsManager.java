@@ -1,6 +1,7 @@
 package com.icta.news;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -31,9 +32,9 @@ public class NewsManager {
 		
 	}
 	
-	public void getNews() {
+	public List<News> getNews() {
 		parser = new JsonParser(client.get(url));
-		news = parser.getNews();
+		return news = parser.getNews();
 	}
 	
 	public void saveNews(Context c) {

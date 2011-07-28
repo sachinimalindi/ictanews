@@ -1,6 +1,9 @@
 package com.icta.news.service;
 
+import java.util.List;
+
 import com.icta.news.NewsManager;
+import com.icta.news.model.News;
 
 import android.app.Service;
 import android.content.Intent;
@@ -24,13 +27,13 @@ public class NewsService extends Service {
 	private INewsDownloaderService.Stub stub = new INewsDownloaderService.Stub() {
 		
 		@Override
-		public int getNews() throws RemoteException {
+		public List<News> getNews() throws RemoteException {
 			Log.d(TAG, "getNews");
-			manager.getNews();
+			List<News> news =manager.getNews();
 			Log.d(TAG, "manager.getNews()");
-			manager.saveNews(getApplicationContext());
-			Log.d(TAG, "saveNews(getApplicationContext()");
-			return manager.newsSize();
+		//	manager.saveNews(getApplicationContext());
+		//	Log.d(TAG, "saveNews(getApplicationContext()");
+			return news;
 		}
 	};
 
@@ -69,5 +72,6 @@ public class NewsService extends Service {
 		}
 		
 	}*/
+	
 	
 }

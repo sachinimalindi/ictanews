@@ -46,7 +46,8 @@ public class NewsListAdapter extends ArrayAdapter<News> {
 	 public void appendNewer(ArrayList<News> nList){
 		 setNotifyOnChange(false);
 		 for (News news : nList) {
-			insert(news, 0);
+			//insert(news, 0);
+			 add(news);
 		}
 		 notifyDataSetChanged();
 

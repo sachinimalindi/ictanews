@@ -24,7 +24,7 @@ public class NewsManagerApplication extends Application {
 	public void onCreate() {
 	    super.onCreate();
 	    if (null == news) {
-			loadNews();
+			//loadNews();
 		}
 	}
 

@@ -46,7 +46,7 @@ public class RestClient {
 	 
 	 private  String convertStreamToString(InputStream is) {
 		 
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+	        BufferedReader reader = new BufferedReader(new InputStreamReader(is),8 * 1024);
 	        StringBuilder sb = new StringBuilder();
 	 
 	        String line = null;

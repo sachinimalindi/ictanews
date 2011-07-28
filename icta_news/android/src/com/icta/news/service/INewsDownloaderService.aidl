@@ -1,5 +1,6 @@
 package com.icta.news.service;
+import com.icta.news.model.News;
 
 interface INewsDownloaderService {
-            int getNews();
+            List<News> getNews();
  }

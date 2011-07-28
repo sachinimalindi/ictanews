@@ -1,12 +1,21 @@
 package com.icta.news.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.icta.news.model.News;
+import com.icta.news.ui.adapter.NewsListAdapter;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.Adapter;
+import android.widget.ListAdapter;
 
 public class NewsServiceHelper {
 	
@@ -17,6 +26,7 @@ public class NewsServiceHelper {
 	private INewsDownloaderService downloaderService;
 	private boolean started = false;
 	private NewsServiceConnection conn = null;
+	private NewsListAdapter adapter;
 
 	public NewsServiceHelper(Context c) {
 		Log.v(TAG, "NewsServiceHelper");
@@ -59,8 +69,9 @@ public class NewsServiceHelper {
 		}
 	}
 	
-	public void bindService() {
+	public void bindService(ListAdapter listAdapter) {
 		Log.v(TAG, "bindService");
+		adapter= (NewsListAdapter) listAdapter;
 		if (conn == null) {
 			Log.v(TAG, "obindService  conn is null :P" );
 			conn = new NewsServiceConnection();
@@ -87,25 +98,30 @@ public class NewsServiceHelper {
 		
 	}
 	
-	public void invokeService() {
+	
+	public List<News> invokeService() {
 		Log.v(TAG, "invokeService");
 		if (conn == null) {
 			Log.v(TAG, "invokeService Cannot invoke - service not bound");
 			//Cannot invoke - service not bound
+			return null;
 		} else {
 			Log.v(TAG, "invokeService is invoking ");
 			try {
 				Log.v(TAG, "invokeService inside try");
 				Log.v(TAG, "invokeService service is :"+downloaderService);
-				int counter = downloaderService.getNews();
-				Log.v(TAG, "counter is : "+counter);
+				 return downloaderService.getNews();
+				 
+				//Log.v(TAG, "counter is : "+counter);
 			} catch (Exception e) {
 				Log.v(TAG, "e is : "+e.getMessage());
 				e.printStackTrace();
 				e.getCause();
 				e.toString();
+				return null;
 			}
 		}
+		
 	}
 	
 	public boolean isServiceConnection() {
@@ -123,7 +139,10 @@ public class NewsServiceHelper {
 			Log.v(TAG, "onServiceConnected");
 			downloaderService = INewsDownloaderService.Stub.asInterface(service);
 			Log.v(TAG, "onServiceConnected is");
-			invokeService();
+			ArrayList<News> n =(ArrayList<News>) invokeService();
+			Log.v(TAG, "onServiceConnected news are  : "+n.size());
+			adapter.appendNewer(n);
+			releaseService();
 		}
 
 		@Override
