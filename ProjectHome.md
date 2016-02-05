@@ -1,0 +1,1 @@
+icta news is android app it's read news form rest service
